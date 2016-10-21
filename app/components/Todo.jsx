@@ -2,12 +2,16 @@ import React from 'react';
 
 class Todo extends React.Component {
 
+
   render() {
-    const {id, text} = this.props;
+    const {id, text, completed} = this.props;
 
     return (
-      <div>
-        {id}- {text}
+      <div onClick={() => {
+          this.props.onTodoClick(id);
+        }} >
+        <input type="checkbox" checked={completed} />
+         {text}
       </div>
     );
   }
