@@ -18,6 +18,24 @@ describe('TodoApp', function() {
     todoApp.handleAddTodo(todoText);
 
     expect(todoApp.state.todos[0].text).toBe(todoText);
+  });
 
+  it('should toggle todo when onTodoClick called', function() {
+    let todoData = [
+      {
+        id: 11,
+        text: "ok",
+        completed: false
+      }
+    ];
+    const todoApp = TestUtils.renderIntoDocument(<TodoApp />);
+
+    todoApp.setState({todos: todoData});
+
+    expect(todoApp.state.todos[0].completed).toBe(false);
+
+    todoApp.handleTodoClick(11);
+
+    expect(todoApp.state.todos[0].completed).toBe(true);
   });
 });

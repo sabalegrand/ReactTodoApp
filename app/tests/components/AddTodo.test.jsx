@@ -21,7 +21,6 @@ describe('AddTodo', function() {
     TestUtils.Simulate.submit($el.find('form')[0]);
 
     expect(spy).toHaveBeenCalledWith(todoText);
-
   });
 
   it('should not call onAddTodo call with invialid data', function() {
@@ -34,6 +33,7 @@ describe('AddTodo', function() {
     TestUtils.Simulate.submit($el.find('form')[0]);
 
     expect(spy).toNotHaveBeenCalled();
-
   });
+
+  
 });
