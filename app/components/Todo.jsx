@@ -6,6 +6,7 @@ class Todo extends React.Component {
 
   render() {
     const {id, text, completed, createdAt, completedAt} = this.props;
+    let todoClassName = completed ? 'todo todo-completed' : 'todo';
     const renderDate = () => {
       let message = 'Created ';
       let timestamp = createdAt;
@@ -19,12 +20,16 @@ class Todo extends React.Component {
     }
 
     return (
-      <div onClick={() => {
+      <div className={todoClassName} onClick={() => {
           this.props.onTodoClick(id);
         }} >
-        <input type="checkbox" checked={completed} />
-         <p>{text}</p>
-         <p>{renderDate()}</p>
+        <div>
+          <input type="checkbox" checked={completed} />
+        </div>
+         <div>
+           <p>{text}</p>
+           <p className="todo__subtext">{renderDate()}</p>
+         </div>
       </div>
     );
   }

@@ -7,13 +7,24 @@ class TodoList extends React.Component {
 
 
   render() {
-    const todos = this.props.todos.map(todo =>
-      <Todo key={todo.id} {...todo} onTodoClick={this.props.onTodoClick}/>
-    );
+    let {todos} = this.props;
+
+
+    const renderTodos = () => {
+      if ( todos.length === 0) {
+        return (
+          <p className="container__message">Nothing to do</p>
+        );
+      }
+
+      return todos.map(todo =>
+        <Todo key={todo.id} {...todo} onTodoClick={this.props.onTodoClick}/>
+      );
+    }
 
     return (
       <div>
-        {todos}
+        {renderTodos()}
       </div>
     );
   }

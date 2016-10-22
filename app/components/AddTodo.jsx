@@ -24,7 +24,7 @@ class AddTodo extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container__footer">
         <form onSubmit={this.handleSubmit}>
           <input ref="todoTextInput" type="text" placeholder="What do you need to do?"/>
           <button className="button expanded">
