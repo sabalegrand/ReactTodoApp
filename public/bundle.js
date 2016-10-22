@@ -113,7 +113,7 @@
 
 	$(document).foundation();
 
-	__webpack_require__(270);
+	__webpack_require__(271);
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRouter.Router,
 	  { history: _reactRouter.hashHistory },
@@ -27178,6 +27178,10 @@
 
 	var _TodoSearch2 = _interopRequireDefault(_TodoSearch);
 
+	var _TodoAPI = __webpack_require__(270);
+
+	var _TodoAPI2 = _interopRequireDefault(_TodoAPI);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -27199,15 +27203,7 @@
 	    _this.state = {
 	      showCompleted: false,
 	      searchText: '',
-	      todos: [{
-	        id: (0, _nodeUuid2.default)(),
-	        text: 'Todo tg',
-	        completed: false
-	      }, {
-	        id: (0, _nodeUuid2.default)(),
-	        text: 'ok va manger',
-	        completed: true
-	      }]
+	      todos: _TodoAPI2.default.getTodos()
 	    };
 
 	    _this.handleAddTodo = _this.handleAddTodo.bind(_this);
@@ -27217,6 +27213,11 @@
 	  }
 
 	  _createClass(TodoApp, [{
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate(prevProps, prevState) {
+	      _TodoAPI2.default.setTodos(this.state.todos);
+	    }
+	  }, {
 	    key: 'handleAddTodo',
 	    value: function handleAddTodo(text) {
 	      this.setState({
@@ -31836,13 +31837,48 @@
 /* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _jquery = __webpack_require__(7);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	  setTodos: function setTodos(todos) {
+	    if (_jquery2.default.isArray(todos)) {
+	      localStorage.setItem('todos', JSON.stringify(todos));
+	      return todos;
+	    }
+	  },
+	  getTodos: function getTodos() {
+	    var stringTodos = localStorage.getItem('todos');
+	    var todos = [];
+
+	    try {
+	      todos = JSON.parse(stringTodos);
+	    } catch (e) {}
+
+	    return _jquery2.default.isArray(todos) ? todos : [];
+	  }
+	};
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(271);
+	var content = __webpack_require__(272);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(273)(content, {});
+	var update = __webpack_require__(274)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -31859,10 +31895,10 @@
 	}
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(272)();
+	exports = module.exports = __webpack_require__(273)();
 	// imports
 
 
@@ -31873,7 +31909,7 @@
 
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports) {
 
 	/*
@@ -31929,7 +31965,7 @@
 
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
