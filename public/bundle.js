@@ -27258,14 +27258,18 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var todos = this.state.todos;
+	      var _state = this.state;
+	      var todos = _state.todos;
+	      var showCompleted = _state.showCompleted;
+	      var searchText = _state.searchText;
 
+	      var filteredTodos = _TodoAPI2.default.filterTodos(todos, showCompleted, searchText);
 
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(_TodoSearch2.default, { onSearch: this.handleSearch }),
-	        _react2.default.createElement(_TodoList2.default, { todos: todos, onTodoClick: this.handleTodoClick }),
+	        _react2.default.createElement(_TodoList2.default, { todos: filteredTodos, onTodoClick: this.handleTodoClick }),
 	        _react2.default.createElement(_AddTodo2.default, { onAddTodo: this.handleAddTodo })
 	      );
 	    }
@@ -31865,6 +31869,23 @@
 	    } catch (e) {}
 
 	    return _jquery2.default.isArray(todos) ? todos : [];
+	  },
+	  filterTodos: function filterTodos(todos, showCompleted, filter) {
+	    var filteredTodos = todos;
+
+	    filteredTodos = filteredTodos.filter(function (todo) {
+	      return !todo.completed || showCompleted;
+	    });
+
+	    filteredTodos = filteredTodos.filter(function (todo) {
+	      return !filter ? true : todo.text.toLowerCase().indexOf(filter) > -1;
+	    });
+
+	    filteredTodos = filteredTodos.sort(function (a, b) {
+	      return a.completed;
+	    });
+
+	    return filteredTodos;
 	  }
 	};
 
