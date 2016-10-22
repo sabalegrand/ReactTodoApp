@@ -18,6 +18,7 @@ describe('TodoApp', function() {
     todoApp.handleAddTodo(todoText);
 
     expect(todoApp.state.todos[0].text).toBe(todoText);
+    expect(todoApp.state.todos[0].createdAt).toBeA('number');
   });
 
   it('should toggle todo when onTodoClick called', function() {
@@ -25,7 +26,9 @@ describe('TodoApp', function() {
       {
         id: 11,
         text: "ok",
-        completed: false
+        completed: false,
+        createdAt: 0,
+        completedAt:undefined
       }
     ];
     const todoApp = TestUtils.renderIntoDocument(<TodoApp />);
@@ -33,9 +36,28 @@ describe('TodoApp', function() {
     todoApp.setState({todos: todoData});
 
     expect(todoApp.state.todos[0].completed).toBe(false);
-
     todoApp.handleTodoClick(11);
+    expect(todoApp.state.todos[0].completed).toBe(true);
+    expect(todoApp.state.todos[0].completedAt).toBeA('number');
+  });
+
+  it('should toggle todo from completed to incompleted', function() {
+    let todoData = [
+      {
+        id: 11,
+        text: "ok",
+        completed: true,
+        createdAt: 0,
+        completedAt: 1
+      }
+    ];
+    const todoApp = TestUtils.renderIntoDocument(<TodoApp />);
+
+    todoApp.setState({todos: todoData});
 
     expect(todoApp.state.todos[0].completed).toBe(true);
+    todoApp.handleTodoClick(11);
+    expect(todoApp.state.todos[0].completed).toBe(false);
+    expect(todoApp.state.todos[0].completedAt).toNotExist();
   });
 });
